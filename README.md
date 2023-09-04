@@ -1,1 +1,1 @@
-# model_predictive_control_labs
+# Model Predictive Control Labs
