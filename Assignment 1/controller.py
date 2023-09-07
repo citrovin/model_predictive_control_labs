@@ -10,9 +10,9 @@ class Controller(object):
         u_t = - L @ x_t + lr @ r
         """
 
-        # Hint:
-        self.p1 = 0.0
-        self.p2 = 0.0
+        # Hint: 
+        self.p1 = 0.96
+        self.p2 = 0.6
 
         self.poles = [self.p1, self.p2]
         self.L = np.zeros((1, 2))
@@ -117,7 +117,8 @@ class Controller(object):
                   Set dt with 'set_sampling_time' method.")
 
         # TODO: Complete the integral action update law
-        self.i_term = 0.0
+        # self.i_term = 0.0
+        self.i_term = self.i_term + self.dt * (x[0] - self.ref[0])
 
     def reset_integral(self):
         """
@@ -161,7 +162,8 @@ class Controller(object):
         if self.use_integral is True:
             self.update_integral(x)
 
-        # TODO: Complete the control law
-        # u = 0.0
-        u = -self.L @ (x-self.ref)
+        # TODO: Complete the control law        
+        u = -self.L @ (x-self.ref) - self.Ki*self.i_term
+        u = np.clip(u, -0.85, 0.85)
+        
         return u

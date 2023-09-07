@@ -58,6 +58,7 @@ class EmbeddedSimEnvironment(object):
             x = x_vec[:, -1].reshape(2, 1)
             u = self.controller(x)
             x_next = self.dynamics(x, u)
+            
 
             # Store data
             t = np.append(t, t[-1] + self.dt)
@@ -94,6 +95,7 @@ class EmbeddedSimEnvironment(object):
             plt.show()
 
         # Store data internally for offline plotting
+        print(f'Minimum value of x = {x_vec[0].min()} after {x_vec[0].argmin()} steps')
         self.t = t
         self.x_vec = x_vec
         self.u_vec = u_vec

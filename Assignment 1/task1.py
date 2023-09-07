@@ -30,7 +30,7 @@ print("Cd = ", Cd)
 abee.set_discrete_dynamics(Ad, Bd)
 
 # Plot poles and zeros
-abee.poles_zeros(Ad, Bd, Cd, Dd)
+sys = abee.poles_zeros(Ad, Bd, Cd, Dd)
 
 # Get control gains
 ctl.set_system(Ad, Bd, Cd, Dd)

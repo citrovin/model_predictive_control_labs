@@ -197,4 +197,4 @@ class Astrobee(object):
         print("Zeros:",sys.zeros())
 
         plt.show()
-        return
+        return sys
