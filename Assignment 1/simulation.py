@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # loading bar for the simulation
 # for installation: pip install tqdm
-from tqdm import tqdm 
+# from tqdm import tqdm 
 
 
 class EmbeddedSimEnvironment(object):
@@ -55,7 +55,8 @@ class EmbeddedSimEnvironment(object):
         # Start figure
         if online_plot:
             fig, (ax1, ax2, ax3) = plt.subplots(3)
-        for i in tqdm(range(sim_loop_length)):
+        #for i in tqdm(range(sim_loop_length)):
+        for i in range(sim_loop_length):
             # Iteration
             # print(i, "/", (sim_loop_length - 1))
             # Get control input and obtain next state
