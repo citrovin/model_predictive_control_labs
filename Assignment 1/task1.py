@@ -15,6 +15,9 @@ A, B = abee.one_axis_ground_dynamics()
 Ad, Bd, Cd, Dd = abee.casadi_c2d(A, B, [1,0], [0])
 abee.set_discrete_dynamics(Ad, Bd)
 
+print(f'Matrix A: {Ad}')
+print(f'Matrix B: {Bd}')
+
 # Plot poles and zeros
 abee.poles_zeros(Ad, Bd, Cd, Dd)
 

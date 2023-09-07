@@ -55,7 +55,7 @@ class Astrobee(object):
 
         Ac[0,1] = 1
         Bc[1] = (1/self.mass)
-        
+    
         self.Ac = np.asarray(Ac)
         self.Bc = np.asarray(Bc)
 
@@ -192,5 +192,7 @@ class Astrobee(object):
         # dt != 0 -> Discrete time system
         sys = control.StateSpace(Ad, Bd, Cd, Dd, dt=self.dt)
         control.pzmap(sys)
+        print("Poles:", sys.poles())
+        print("Zeros:",sys.zeros())
         plt.show()
         return
