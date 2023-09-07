@@ -163,11 +163,9 @@ class Controller(object):
             self.update_integral(x)
 
         # TODO: Complete the control law
-        # Q4
-        # u = -self.L@(x - self.ref)
-        # Q5
         u = -self.L@(x - self.ref) - self.Ki*self.i_term
 
+        # u is bounded to 0.85 and -0.85
         u = np.clip(u, -0.85, 0.85)
 
         return u
