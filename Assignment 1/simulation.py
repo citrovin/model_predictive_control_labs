@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from tqdm import tqdm # loading bar for the simulation
+
+# loading bar for the simulation
+# for installation: pip install tqdm
+from tqdm import tqdm 
 
 
 class EmbeddedSimEnvironment(object):
@@ -97,7 +100,7 @@ class EmbeddedSimEnvironment(object):
         
         print(f'Minimum value of x = {x_vec[0].min()} after {x_vec[0].argmin()} steps')
         # print(f'Maximum value of x = {x_vec[0].max()}')
-        
+
         # Store data internally for offline plotting
         self.t = t
         self.x_vec = x_vec
