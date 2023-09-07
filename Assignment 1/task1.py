@@ -12,14 +12,14 @@ ctl = Controller()
 A, B = abee.one_axis_ground_dynamics()
 
 # TODO: Get the discrete time system with casadi_c2d
-Ad, Bd, Cd, Dd = abee.casadi_c2d( )
+Ad, Bd, Cd, Dd = abee.casadi_c2d(A, B, [1,0], [0])
 abee.set_discrete_dynamics(Ad, Bd)
 
 # Plot poles and zeros
 abee.poles_zeros(Ad, Bd, Cd, Dd)
 
 # Get control gains
-ctl.set_system(Ad, Bd)
+ctl.set_system(Ad, Bd, Cd, Dd)
 K = ctl.get_closed_loop_gain()
 
 # Set the desired reference based on the dock position and zero velocity on docked position

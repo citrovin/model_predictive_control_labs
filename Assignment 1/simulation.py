@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm # loading bar for the simulation
 
 
 class EmbeddedSimEnvironment(object):
@@ -51,9 +52,9 @@ class EmbeddedSimEnvironment(object):
         # Start figure
         if online_plot:
             fig, (ax1, ax2, ax3) = plt.subplots(3)
-        for i in range(sim_loop_length):
+        for i in tqdm(range(sim_loop_length)):
             # Iteration
-            print(i, "/", (sim_loop_length - 1))
+            # print(i, "/", (sim_loop_length - 1))
             # Get control input and obtain next state
             x = x_vec[:, -1].reshape(2, 1)
             u = self.controller(x)
@@ -72,6 +73,7 @@ class EmbeddedSimEnvironment(object):
                 else:
                     l_wnd = 0
 
+                
                 ax1.clear()
                 ax1.set_title("Astrobee")
                 ax1.plot(t[l_wnd:], x_vec[0, l_wnd:], 'r--')
@@ -92,7 +94,10 @@ class EmbeddedSimEnvironment(object):
 
         if online_plot:
             plt.show()
-
+        
+        print(f'Minimum value of x = {x_vec[0].min()} after {x_vec[0].argmin()} steps')
+        # print(f'Maximum value of x = {x_vec[0].max()}')
+        
         # Store data internally for offline plotting
         self.t = t
         self.x_vec = x_vec

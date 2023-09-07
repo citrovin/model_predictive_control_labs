@@ -53,6 +53,9 @@ class Astrobee(object):
         #       Ac and Bc. Note that the system mass
         #       is available with self.mass
 
+        Ac[0,1] = 1
+        Bc[1] = (1/self.mass)
+        
         self.Ac = np.asarray(Ac)
         self.Bc = np.asarray(Bc)
 
@@ -161,7 +164,9 @@ class Astrobee(object):
             print("Set discrete-time dynamics with set_discrete_dynamcs(Ad, Bd) method.")
             return np.zeros(x.shape[0])
 
+
         x_next = self.Ad @ x + self.Bd @ u
+
 
         if self.w != 0.0:
             Bw = ca.DM.zeros(2, 1)

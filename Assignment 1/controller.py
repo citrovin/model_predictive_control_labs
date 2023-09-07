@@ -1,5 +1,5 @@
 import numpy as np
-from control.matlab import place
+from control.matlab import place, acker
 
 
 class Controller(object):
@@ -9,10 +9,10 @@ class Controller(object):
         Nonlinear Controller class. Implements the controller:
         u_t = - L @ x_t + lr @ r
         """
-
+        
         # Hint:
-        self.p1 = 0.0
-        self.p2 = 0.0
+        self.p1 = 0.96
+        self.p2 = 0.6
 
         self.poles = [self.p1, self.p2]
         self.L = np.zeros((1, 2))
@@ -55,11 +55,14 @@ class Controller(object):
         """
         if p is None:
             p = self.poles
+            # p[1]+=0.000001 # only if we use place() => pertubation in poles
 
         A = self.A.tolist()
         B = self.B.tolist()
 
-        L = place(A, B, p)
+        L = acker(A, B, p) # use to not perbutabe on the poles
+        # L = place(A, B, p)
+
         self.L[0, 0] = L[0, 0]
         self.L[0, 1] = L[0, 1]
 
@@ -113,7 +116,8 @@ class Controller(object):
                   Set dt with 'set_sampling_time' method.")
 
         # TODO: Complete the integral action update law
-        self.i_term = 0.0
+        h = self.dt
+        self.i_term = self.i_term + h*(x[0] - self.ref[0])
 
     def reset_integral(self):
         """
@@ -155,8 +159,20 @@ class Controller(object):
         """
 
         if self.use_integral is True:
+            # only in third simulation 
             self.update_integral(x)
 
         # TODO: Complete the control law
-        u = 0.0
+        # Q4
+        # u = -self.L@(x - self.ref)
+        # Q5
+        u = -self.L@(x - self.ref) - self.Ki*self.i_term
+
+        if u[0] > 0.85:
+            u[0] = 0.85
+        elif u[0] < -0.85:
+            u[0] = -0.85
+        else:
+            None
+
         return u
