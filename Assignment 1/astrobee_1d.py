@@ -52,6 +52,12 @@ class Astrobee(object):
         # TODO: Complete the entries of the matrices
         #       Ac and Bc. Note that the system mass
         #       is available with self.mass
+        Ac[0, 1] = 1
+        Bc[1] = 1/self.mass
+        # Bc[1] = 1
+
+        print("Ac = ", Ac)
+        print("Bc = ", Bc)
 
         self.Ac = np.asarray(Ac)
         self.Bc = np.asarray(Bc)
@@ -187,5 +193,8 @@ class Astrobee(object):
         # dt != 0 -> Discrete time system
         sys = control.StateSpace(Ad, Bd, Cd, Dd, dt=self.dt)
         control.pzmap(sys)
+        print("Poles:", sys.poles())
+        print("Zeros:",sys.zeros())
+
         plt.show()
         return

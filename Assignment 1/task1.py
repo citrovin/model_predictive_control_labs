@@ -4,22 +4,36 @@ from astrobee_1d import Astrobee
 from controller import Controller
 from simulation import EmbeddedSimEnvironment
 
+import casadi as ca
+
 # Create pendulum and controller objects
 abee = Astrobee(h=0.1)
 ctl = Controller()
 
 # Get the system discrete-time dynamics
 A, B = abee.one_axis_ground_dynamics()
+Cc = ca.DM.zeros(1, 2)
+Dc = ca.DM.zeros(1, 1)
+Cc[0,0] = 1
+
+Cc = np.asarray(Cc)
+Dc = np.asarray(Dc)
+Cc = [1,0]
+Dc = [0]
 
 # TODO: Get the discrete time system with casadi_c2d
-Ad, Bd, Cd, Dd = abee.casadi_c2d( )
+Ad, Bd, Cd, Dd = abee.casadi_c2d(A, B, Cc, Dc)
+print("Ad =", Ad)
+print("Bd =", Bd)
+print("Cd = ", Cd)
+
 abee.set_discrete_dynamics(Ad, Bd)
 
 # Plot poles and zeros
 abee.poles_zeros(Ad, Bd, Cd, Dd)
 
 # Get control gains
-ctl.set_system(Ad, Bd)
+ctl.set_system(Ad, Bd, Cd, Dd)
 K = ctl.get_closed_loop_gain()
 
 # Set the desired reference based on the dock position and zero velocity on docked position

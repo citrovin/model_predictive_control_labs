@@ -56,6 +56,10 @@ class Controller(object):
         if p is None:
             p = self.poles
 
+        # otherwise place gives you an error
+        if p[0] == p[1]:
+            p[1] += 0.000001
+
         A = self.A.tolist()
         B = self.B.tolist()
 
@@ -158,5 +162,6 @@ class Controller(object):
             self.update_integral(x)
 
         # TODO: Complete the control law
-        u = 0.0
+        # u = 0.0
+        u = -self.L @ (x-self.ref)
         return u
