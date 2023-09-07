@@ -9,7 +9,7 @@ class Controller(object):
         Nonlinear Controller class. Implements the controller:
         u_t = - L @ x_t + lr @ r
         """
-        
+
         # Hint:
         self.p1 = 0.96
         self.p2 = 0.6
@@ -168,11 +168,6 @@ class Controller(object):
         # Q5
         u = -self.L@(x - self.ref) - self.Ki*self.i_term
 
-        if u[0] > 0.85:
-            u[0] = 0.85
-        elif u[0] < -0.85:
-            u[0] = -0.85
-        else:
-            None
+        u = np.clip(u, -0.85, 0.85)
 
         return u
