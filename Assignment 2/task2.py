@@ -10,7 +10,7 @@ bumble = Astrobee()
 # Get the system discrete-time dynamics
 A, B = bumble.cartesian_ground_dynamics()
 Ad, Bd, Cd, Dd = bumble.casadi_c2d(A, B, np.eye(6), np.zeros((6, 3)))
-bumble.set_discrete_dynamics()
+bumble.set_discrete_dynamics(Ad, Bd)
 
 # Get controller
 R = np.eye(3) * 10
@@ -38,6 +38,7 @@ sim_env = EmbeddedSimEnvironment(model=bumble,
                                  time=30.0)
 t, y, u = sim_env.run(x0, x_ref=x_full_ref)
 sim_env.visualize_error()
+
 # NOTE: You can further observe what the prediction for the solver is, versus the actual state
 # sim_env.visualize_prediction_vs_reference(x_pred=x_star, x_ref=x_full_ref, control=u_star)
 # sim_env.visualize_state_vs_reference(state=y, ref=x_full_ref, control=u_star)

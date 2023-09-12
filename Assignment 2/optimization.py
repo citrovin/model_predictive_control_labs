@@ -120,6 +120,8 @@ class FiniteOptimization(object):
                     #       in X, Y and angle theta, by adjusting 'con_ineq',
                     #       'con_ineq_ub' and 'con_ineq_lb' - take inspiration from
                     #       the example below for 3D
+                    
+
                 else:
                     x_ref = x_t_ref[(r_i * self.Nr):(r_i * self.Nr + self.Nr)]
 

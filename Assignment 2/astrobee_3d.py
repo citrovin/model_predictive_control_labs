@@ -65,6 +65,10 @@ class Astrobee(object):
         Bc = ca.DM.zeros(self.n, self.m)
 
         # TODO: Fill the matrices Ac and Bc according to the model in (1)
+        Ac[0,2] = Ac[1,3] = Ac[4,5] = 1
+
+        Bc[2,0] = Bc[3,1] = (1/self.mass)
+        Bc[5,2] = (1/self.inertia)
 
         self.Ac = np.asarray(Ac)
         self.Bc = np.asarray(Bc)
