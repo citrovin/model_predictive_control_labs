@@ -99,8 +99,10 @@ class EmbeddedSimEnvironment(object):
         if online_plot:
             plt.show()
         
-        print(f'Minimum value of x = {x_vec[0].min()} after {x_vec[0].argmin()} steps')
-        # print(f'Maximum value of x = {x_vec[0].max()}')
+        print(f'X values below 0: {np.where(x_vec[0] < 0)}')
+        print(f'Position after 30 seconds: {x_vec[:,300]}')
+        print(f'Absolute Maximum of u = {np.round(np.abs(u_vec[0].max()), 5)}')
+        print(f'Minimum value of x = {np.round(x_vec[0].min(), 5)} after {x_vec[0].argmin()} steps')
 
         # Store data internally for offline plotting
         self.t = t

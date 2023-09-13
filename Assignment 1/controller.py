@@ -11,8 +11,8 @@ class Controller(object):
         """
 
         # Hint:
-        self.p1 = 0.96
-        self.p2 = 0.6
+        self.p1 = 0.98
+        self.p2 = 0.98
 
         self.poles = [self.p1, self.p2]
         self.L = np.zeros((1, 2))
@@ -166,6 +166,5 @@ class Controller(object):
         u = -self.L@(x - self.ref) - self.Ki*self.i_term
 
         # u is bounded to 0.85 and -0.85
-        u = np.clip(u, -0.85, 0.85)
-
+        # u = np.clip(u, -0.85, 0.85)
         return u
