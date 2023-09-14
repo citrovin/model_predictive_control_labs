@@ -66,9 +66,9 @@ class Astrobee(object):
 
         # TODO: Fill the matrices Ac and Bc according to the model in (1)
         Ac[0,2] = Ac[1,3] = Ac[4,5] = 1
-
-        Bc[2,0] = Bc[3,1] = (1/self.mass)
-        Bc[5,2] = (1/self.inertia)
+        
+        Bc[2,0] = Bc[3,1] = 1/self.mass
+        Bc[5,2] = 1/self.inertia
 
         self.Ac = np.asarray(Ac)
         self.Bc = np.asarray(Bc)
@@ -90,6 +90,11 @@ class Astrobee(object):
 
         # TODO: Fill the matrices Ac and Bc according to the model in (1), adding
         #       the proper component for translation on Z
+
+
+        Ac[0,3] = Ac[1,4] = Ac[2,5] = Ac[6,7] = 1
+        Bc[3,0] = Bc[4,1] = Bc[5,2] = 1/self.mass
+        Bc[7,3] = 1/self.inertia
 
         self.Ac = np.asarray(Ac)
         self.Bc = np.asarray(Bc)
