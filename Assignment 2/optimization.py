@@ -127,7 +127,7 @@ class FiniteOptimization(object):
                     con_ineq_ub.append(self.pos_tol)
                     con_ineq_lb.append(-self.pos_tol)
 
-                    con_ineq.append(x_ref[2] - x_t[4])
+                    con_ineq.append(x_ref[2] - x_t[4]) # attitude
                     con_ineq_ub.append(self.att_tol)
                     con_ineq_lb.append(-self.att_tol)
                     # exit()

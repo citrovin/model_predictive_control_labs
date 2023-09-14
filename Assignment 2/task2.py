@@ -39,8 +39,6 @@ sim_env = EmbeddedSimEnvironment(model=bumble,
 t, y, u = sim_env.run(x0, x_ref=x_full_ref)
 sim_env.visualize_error()
 
-exit()
-
 # NOTE: You can further observe what the prediction for the solver is, versus the actual state
 # sim_env.visualize_prediction_vs_reference(x_pred=x_star, x_ref=x_full_ref, control=u_star)
 # sim_env.visualize_state_vs_reference(state=y, ref=x_full_ref, control=u_star)
@@ -49,6 +47,7 @@ exit()
 sim_env.broken_thruster()
 t, y, u = sim_env.run(x0, x_ref=x_full_ref)
 sim_env.visualize_error()
+
 
 # Get the system discrete-time dynamics with Z
 queen = Astrobee(axis="3d")

@@ -56,6 +56,7 @@ class EmbeddedSimEnvironment(object):
             u = np.array(self.controller[i])
             if self.broke_thruster:
                 u[1] = u[1] + np.random.uniform(-0.07, 0.07, (1, 1))
+
             x_next = self.dynamics(x, u)
 
             # Store data
