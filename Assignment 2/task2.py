@@ -10,7 +10,7 @@ bumble = Astrobee()
 # Get the system discrete-time dynamics
 A, B = bumble.cartesian_ground_dynamics()
 Ad, Bd, Cd, Dd = bumble.casadi_c2d(A, B, np.eye(6), np.zeros((6, 3)))
-bumble.set_discrete_dynamics()
+bumble.set_discrete_dynamics(Ad, Bd)
 
 # Get controller
 R = np.eye(3) * 10
