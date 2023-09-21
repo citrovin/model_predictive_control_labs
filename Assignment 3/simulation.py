@@ -116,7 +116,7 @@ class EmbeddedSimEnvironment(object):
         ax4.legend(["x9", "x10", "x11"])
         ax4.set_ylabel("Angular Velocity")
 
-        plt.show()
+        # plt.show()
         return t, x_vec, u_vec
 
     def set_window(self, window):
@@ -184,3 +184,16 @@ class EmbeddedSimEnvironment(object):
         print('   roll: ', max(abs(y[6, 121:] - 0.087)))
         print('   pitch: ', max(abs(y[7, 121:] - 0.077)))
         print('   yaw: ', max(abs(y[8, 121:] - 0.067)))
+
+        if (max_dist >= 0.06):
+            print("Distance too high")
+        if (max_spd >= 0.03):
+            print("speed too high")
+        if (max(abs(y[6, 121:] - 0.087)) >= 10e-7 or max(abs(y[7, 121:] - 0.077)) >= 10e-7 or max(abs(y[8, 121:] - 0.067)) >= 10e-7):
+            print("euler angle deviation too high")
+        if (max(abs(u[0, :])) > 0.85 or max(abs(u[1, :])) > 0.85 or max(abs(u[2, :])) > 0.85):
+            print("force too high")
+        if (max(abs(u[3, :])) > 0.04 or max(abs(u[4, :])) > 0.04 or max(abs(u[5, :])) > 0.04):
+            print("torque too high")
+
+        
