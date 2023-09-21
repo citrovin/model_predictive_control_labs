@@ -3,6 +3,7 @@ import numpy as np
 from astrobee import Astrobee
 from dlqr import DLQR
 from simulation import EmbeddedSimEnvironment
+import sys
 
 # ------------------------------
 # Part I - LQR Design
@@ -32,19 +33,19 @@ abee.set_discrete_dynamics(Ad, Bd)
 # TODO: Check eigenvalues, and verify that for each left eigenvector v of Ad
 #       corresponding to an eigenvalue not inside the unit circle, v @ Bd != 0
 E, V = np.linalg.eig(Ad.T)
-print(E)
-print(V.T @ Bd)
+print("eigenvalues: ", E)
+print("Eigenvectors * Bd ", V.T @ Bd)
 
 R_coefficients = np.ones(6)
 Q_coefficients = np.ones(12)
 
 # TODO: uncomment the code below to adjust the coefficients of Q and R
-# Q_coefficients[0:3] = 0
-# Q_coefficients[3:6] = 0
-# Q_coefficients[6:9] = 0
-# Q_coefficients[9:12] = 0
-# R_coefficients[0:3] = 0
-# R_coefficients[3:6] = 0
+Q_coefficients[0:3] *= 5
+Q_coefficients[3:6] *= -5
+Q_coefficients[6:9] *= 5
+# Q_coefficients[9:12] *= 100
+R_coefficients[0:3] *= 8
+R_coefficients[3:6] *= 20
 
 Q = np.diag(Q_coefficients)
 R = np.diag(R_coefficients)
@@ -66,6 +67,7 @@ x0 = np.zeros((12, 1))
 t, y, u = sim_env.run(x0)
 sim_env.evaluate_performance(t, y, u)
 
+sys.exit()
 # ------------------------------
 # Part II - LQG Design
 # ------------------------------
@@ -76,10 +78,13 @@ C = np.hstack((C, np.zeros((3, 3))))
 
 # Create the matrices for Qn and Rn
 # TODO: adjust the values of Qn and Rn to answer Q4 and Q5 - they start at 0
-Q_diag = np.vstack((np.ones((3, 1)) * 0, np.zeros((3, 1))))
+Q_diag = np.vstack((np.ones((3, 1)) * 10, np.zeros((3, 1))))
 R_diag = np.vstack((np.ones((3, 1)) * 0))
 Qn = np.diag(Q_diag.reshape(6, ))
 Rn = np.diag(R_diag.reshape(3, ))
+
+# print("Qn", Qn)
+# print("Rn", Rn)
 
 abee.set_kf_params(C, Qn, Rn)
 abee.init_kf(x0[0:6].reshape(6, 1))
