@@ -32,11 +32,11 @@ abee.set_discrete_dynamics(Ad, Bd)
 # TODO: Check eigenvalues, and verify that for each left eigenvector v of Ad
 #       corresponding to an eigenvalue not inside the unit circle, v @ Bd != 0
 E, V = np.linalg.eig(Ad.T)
-print(E)
-print(V.T @ Bd)
+print(f'Eigenvalues: {E}')
+print(f'Eigenvectors: \n{V.T @ Bd}')
 
 R_coefficients = np.ones(6)
-Q_coefficients = np.ones(12)
+Q_coefficients = np.ones(12)*10
 
 # TODO: uncomment the code below to adjust the coefficients of Q and R
 # Q_coefficients[0:3] = 0
@@ -71,22 +71,22 @@ sim_env.evaluate_performance(t, y, u)
 # ------------------------------
 # Output feedback - measure position, attitude and angular velocity
 #             Goal - estimate linear velocity
-C = np.eye(3)
-C = np.hstack((C, np.zeros((3, 3))))
+# C = np.eye(3)
+# C = np.hstack((C, np.zeros((3, 3))))
 
-# Create the matrices for Qn and Rn
-# TODO: adjust the values of Qn and Rn to answer Q4 and Q5 - they start at 0
-Q_diag = np.vstack((np.ones((3, 1)) * 0, np.zeros((3, 1))))
-R_diag = np.vstack((np.ones((3, 1)) * 0))
-Qn = np.diag(Q_diag.reshape(6, ))
-Rn = np.diag(R_diag.reshape(3, ))
+# # Create the matrices for Qn and Rn
+# # TODO: adjust the values of Qn and Rn to answer Q4 and Q5 - they start at 0
+# Q_diag = np.vstack((np.ones((3, 1)) * 0, np.zeros((3, 1))))
+# R_diag = np.vstack((np.ones((3, 1)) * 0))
+# Qn = np.diag(Q_diag.reshape(6, ))
+# Rn = np.diag(R_diag.reshape(3, ))
 
-abee.set_kf_params(C, Qn, Rn)
-abee.init_kf(x0[0:6].reshape(6, 1))
+# abee.set_kf_params(C, Qn, Rn)
+# abee.init_kf(x0[0:6].reshape(6, 1))
 
-sim_env_lqg = EmbeddedSimEnvironment(model=abee,
-                                     dynamics=abee.linearized_discrete_dynamics,
-                                     controller=ctl.feedback,
-                                     time=20)
-sim_env_lqg.set_estimator(True)
-t, y, u = sim_env_lqg.run(x0)
+# sim_env_lqg = EmbeddedSimEnvironment(model=abee,
+#                                      dynamics=abee.linearized_discrete_dynamics,
+#                                      controller=ctl.feedback,
+#                                      time=20)
+# sim_env_lqg.set_estimator(True)
+# t, y, u = sim_env_lqg.run(x0)
