@@ -2,6 +2,7 @@ import numpy as np
 import polytope as pc
 import scipy
 
+import time
 from astrobee import Astrobee
 from mpc import MPC
 from simulation import EmbeddedSimEnvironment
@@ -18,11 +19,30 @@ A, B, _, _ = abee.create_discrete_time_dynamics()
 
 # Solve the ARE for our system to extract the terminal weight matrix P
 Q = np.eye(12)
+# Q[3,3] += 100
+# Q[4,4] += 100
+# Q[5,5] += 100
+# Q[9,9] += 100
+# Q[10,10] += 100
+# Q[11,11] += 100
+
+# Q[0,0] += 100
+# Q[1,1] += 100
+# Q[2,2] += 100
+# Q[6,6] += 100
+# Q[7,7] += 100
+# Q[8,8] += 100
+
 R = np.eye(6) * 0.01
+# R = np.eye(6) * 10 
+
+
 P_LQR = np.matrix(scipy.linalg.solve_discrete_are(A, B, Q, R))
 
 # Instantiate controller
 u_lim = np.array([[0.85, 0.41, 0.41, 0.085, 0.041, 0.041]]).T
+# u_lim *= 3
+# u_lim = np.array([[1.2, 1.2, 1.2, 1.2, 1.2, 1.2]]).T
 x_lim = np.array([[1.2, 0.1, 0.1,
                   0.5, 0.5, 0.5,
                   0.2, 0.2, 0.2,
@@ -36,6 +56,7 @@ Rt = R[0:3, 0:3].reshape((3, 3))
 x_lim_t = x_lim[0:6, :].reshape((6, 1))
 u_lim_t = u_lim[0:3, :].reshape((3, 1))
 set_ops_t = SetOperations(At, Bt, Qt, Rt, xlb=-x_lim_t, xub=x_lim_t)
+
 
 # Attitude Dynamics
 Aa = A[6:, 6:].reshape((6, 6))
@@ -100,6 +121,7 @@ elif CASE_SELECTION == "simulate":
 
 # Part II - look into the MPC class and answer Q3
 MPC_HORIZON = 10
+# MPC_HORIZON = 50
 # TODO: inspect the MPC class
 ctl = MPC(model=abee,
           dynamics=abee.linearized_discrete_dynamics,
@@ -122,5 +144,10 @@ sim_env = EmbeddedSimEnvironment(model=abee,
                                  dynamics=abee.linearized_discrete_dynamics,
                                  controller=ctl.mpc_controller,
                                  time=20)
+
+start = time.time()
 t, y, u = sim_env.run(x0)
+end = time.time()
+
+print(f'Cumulative time for solving the whole planning problem: {end-start}')
 sim_env.visualize()

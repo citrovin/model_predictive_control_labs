@@ -15,7 +15,11 @@ if __name__ == "__main__":
     install("control==0.9.0")
     install("filterpy==1.4.5")
     install("polytope==0.2.3")
+<<<<<<< HEAD
     install("yaml")
+=======
+    # install("yaml")
+>>>>>>> ce98e0b (Part of Assignment 4)
 
     try:
         import matplotlib

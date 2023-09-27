@@ -1,0 +1,15 @@
+casadi==3.5.5
+control==0.9.0
+cvxopt==1.2.7
+cycler==0.11.0
+filterpy==1.4.5
+kiwisolver==1.4.5
+matplotlib==3.4.3
+networkx==3.1
+numpy==1.21.2
+Pillow==10.0.1
+polytope==0.2.3
+pyparsing==3.1.1
+python-dateutil==2.8.2
+scipy @ file:///Users/runner/miniforge3/conda-bld/scipy_1633645172612/work
+six==1.16.0
